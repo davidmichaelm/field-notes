@@ -1,6 +1,3 @@
-import {
-  Box,
-} from '@mui/material';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import MainLayout from '../components/MainLayout';
 
