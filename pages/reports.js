@@ -1,6 +1,3 @@
-import {
-  Box,
-} from '@mui/material';
 import InsertChartIcon from '@mui/icons-material/InsertChart';
 import MainLayout from '../components/MainLayout';
 

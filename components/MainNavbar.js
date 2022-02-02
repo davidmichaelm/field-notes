@@ -1,10 +1,8 @@
-import {
-  AppBar, Toolbar, Typography,
-} from '@mui/material';
 import React, { useState } from 'react';
 import MainSidebar from './MainSidebar';
 
 export default function MainNavbar() {
+  // eslint-disable-next-line no-unused-vars
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
   return (
