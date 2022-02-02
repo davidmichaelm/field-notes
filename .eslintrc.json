@@ -1,3 +1,25 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": ["next/core-web-vitals", "airbnb"],
+  "rules": {
+    "react/jsx-filename-extension": "off",
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/forbid-prop-types": "off",
+    "react/require-default-props": "off",
+    "react/jsx-max-props-per-line": [
+      1,
+      {
+        "when": "always"
+      }
+    ]
+  },
+  "settings": {
+    "import/resolver": {
+      "alias": [
+        ["pages", "./pages"],
+        ["components", "./components"],
+        ["styles", "./styles"]
+      ]
+    }
+  }
 }
