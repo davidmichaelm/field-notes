@@ -37,9 +37,12 @@ export default function Forms() {
       }}
       >
         {forms.map((form) => (
-          <Link href={`forms/${form.id}`}>
+          <Link
+            href={`/forms/${form.id}`}
+            key={form.id}
+            passHref
+          >
             <ListItem
-              key={form.id}
               button
             >
               <ListItemText>{form.title}</ListItemText>

@@ -1,8 +1,7 @@
-import {
-  Box, List, ListItem, ListItemText, Typography,
-} from '@mui/material';
+import { Typography } from '@mui/material';
 import ArticleIcon from '@mui/icons-material/Article';
 import MainLayout from '../../components/MainLayout';
+import { FormInputs } from '../../components/formBuilder/inputs';
 
 const title = 'India Form';
 const formInputs = [
@@ -15,7 +14,7 @@ const formInputs = [
   {
     id: 1,
     name: 'location',
-    text: 'Enter your location:',
+    text: 'Select your location:',
     type: 'select',
     options: [
       {
@@ -47,8 +46,18 @@ const formInputs = [
   {
     id: 2,
     name: 'name',
-    text: 'Enter your name:',
-    type: 'text',
+    text: 'Select your name:',
+    type: 'select',
+    options: [
+      {
+        id: 0,
+        text: 'Test Person',
+      },
+      {
+        id: 1,
+        text: 'Another Person',
+      },
+    ],
   },
   {
     id: 3,
@@ -142,53 +151,8 @@ export default function Form() {
       >
         Form questions
       </Typography>
-      <List sx={{ width: '100%' }}>
-        {formInputs.map((input, index) => (
-          <ListItem
-            key={input.id}
-            button
-            sx={{
-              backgroundColor: (theme) => theme.palette.grey['200'],
-              mt: 2,
-              borderRadius: 1,
-            }}
-          >
-            <ListItemText>
-              {index + 1}
-              .
-              {' '}
-              {input.text}
-              {input.type !== 'group' && (
-              <Box>{input.type}</Box> // show disabled representation of the input
-              )}
-              {input.type === 'group' && (
-              <Box sx={{ pl: 4 }}>
-                {input.inputs.map((item) => (
-                  <Typography key={item.id}>
-                    {item.text}
-                    :
-                    {' '}
-                    {item.type}
-                  </Typography>
-                ))}
-              </Box>
-              )}
-              {input.type === 'select' && (
-              <Box sx={{ pl: 4 }}>
-                {input.options.map((item) => (
-                  <Typography
-                    color="gray"
-                    key={item.id}
-                  >
-                    {item.text}
-                  </Typography>
-                ))}
-              </Box>
-              )}
-            </ListItemText>
-          </ListItem>
-        ))}
-      </List>
+
+      <FormInputs formInputs={formInputs} />
     </MainLayout>
   );
 }
