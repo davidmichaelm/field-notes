@@ -3,7 +3,7 @@ import {
 } from '@mui/material';
 import ArticleIcon from '@mui/icons-material/Article';
 import Link from 'next/link';
-import MainLayout from '../../components/MainLayout';
+import MainLayout from '../../components/layout/MainLayout';
 
 const forms = [
   {

@@ -1,6 +1,6 @@
 import { Typography } from '@mui/material';
 import ArticleIcon from '@mui/icons-material/Article';
-import MainLayout from '../../components/MainLayout';
+import MainLayout from '../../components/layout/MainLayout';
 import { FormInputs } from '../../components/formBuilder/inputs';
 
 const title = 'India Form';

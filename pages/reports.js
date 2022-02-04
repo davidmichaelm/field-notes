@@ -1,5 +1,5 @@
 import InsertChartIcon from '@mui/icons-material/InsertChart';
-import MainLayout from '../components/MainLayout';
+import MainLayout from '../components/layout/MainLayout';
 
 export default function Forms() {
   return (

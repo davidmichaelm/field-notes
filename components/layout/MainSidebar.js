@@ -65,6 +65,7 @@ export default function MainSidebar({ open }) {
           {links.map((link) => (
             <Link
               href={link.href}
+              passHref
               key={link.title}
             >
               <ListItem button>

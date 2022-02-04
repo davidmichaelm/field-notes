@@ -1,5 +1,5 @@
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import MainLayout from '../components/MainLayout';
+import MainLayout from '../components/layout/MainLayout';
 
 export default function Dashboard() {
   return (
