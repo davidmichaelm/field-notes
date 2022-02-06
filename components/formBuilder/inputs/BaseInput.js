@@ -14,7 +14,7 @@ export default function BaseInput(props) {
     <Element
       sx={{
         backgroundColor: (theme) => (theme.palette.grey['200']),
-        mt: 2,
+        mb: 2,
         borderRadius: 1,
         ...containerStyle,
       }}

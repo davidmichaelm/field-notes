@@ -1,5 +1,5 @@
 import {
-  List, ListItem, ListItemText, Typography,
+  List, ListItemButton, ListItemText, Typography,
 } from '@mui/material';
 import ArticleIcon from '@mui/icons-material/Article';
 import Link from 'next/link';
@@ -32,8 +32,6 @@ export default function Forms() {
       </Typography>
       <List sx={{
         width: '100%',
-        backgroundColor: (theme) => theme.palette.grey['200'],
-        borderRadius: 1,
       }}
       >
         {forms.map((form) => (
@@ -42,11 +40,14 @@ export default function Forms() {
             key={form.id}
             passHref
           >
-            <ListItem
-              button
+            <ListItemButton sx={{
+              backgroundColor: (theme) => theme.palette.grey['200'],
+              borderRadius: 1,
+              mb: 1,
+            }}
             >
               <ListItemText>{form.title}</ListItemText>
-            </ListItem>
+            </ListItemButton>
           </Link>
 
         ))}
