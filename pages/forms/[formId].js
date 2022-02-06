@@ -1,10 +1,11 @@
 import { Typography } from '@mui/material';
 import ArticleIcon from '@mui/icons-material/Article';
+import { useState } from 'react';
 import MainLayout from '../../components/layout/MainLayout';
 import { FormInputs } from '../../components/formBuilder/inputs';
 
 const title = 'India Form';
-const formInputs = [
+const formInputsTestData = [
   {
     id: 0,
     name: 'date',
@@ -134,6 +135,12 @@ const formInputs = [
 ];
 
 export default function Form() {
+  const [formInputs, setFormInputs] = useState(formInputsTestData);
+
+  const handleInputSave = (input) => {
+    setFormInputs(formInputs.map((i) => (i.id === input.id ? input : i)));
+  };
+
   return (
     <MainLayout
       title={title}
@@ -152,7 +159,10 @@ export default function Form() {
         Form questions
       </Typography>
 
-      <FormInputs formInputs={formInputs} />
+      <FormInputs
+        formInputs={formInputs}
+        onInputSave={handleInputSave}
+      />
     </MainLayout>
   );
 }

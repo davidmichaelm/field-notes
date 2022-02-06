@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Box } from '@mui/material';
 import BaseInput from './BaseInput';
 import singleInputTypes from './inputTypes/singleInputTypes';
 
@@ -19,8 +20,10 @@ export default function GroupInput(props) {
             <Input
               key={input.id}
               input={item}
-              containerStyle={{ mt: 0, p: 0, pl: 4 }}
-              nested
+              containerStyle={{
+                mt: 0, p: 0, pl: 4, backgroundColor: 'none',
+              }}
+              component={Box}
             />
           </React.Fragment>
         );

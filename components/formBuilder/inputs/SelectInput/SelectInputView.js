@@ -1,9 +1,10 @@
 import { Box, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
-import BaseInput from './BaseInput';
+import BaseInput from '../BaseInput';
 
-export default function SelectInput(props) {
+export default function SelectInputView(props) {
   const { input, containerStyle, ...rest } = props;
+
   return (
     <BaseInput
       containerStyle={containerStyle}
@@ -24,7 +25,7 @@ export default function SelectInput(props) {
   );
 }
 
-SelectInput.propTypes = {
+SelectInputView.propTypes = {
   input: PropTypes.object,
   containerStyle: PropTypes.object,
 };

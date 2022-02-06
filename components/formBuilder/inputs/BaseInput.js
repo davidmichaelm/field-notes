@@ -1,20 +1,19 @@
 import {
-  Box,
   ListItemButton, ListItemText,
 } from '@mui/material';
 import PropTypes from 'prop-types';
 
 export default function BaseInput(props) {
   const {
-    children, containerStyle, textStyle, nested = false, ...rest
+    children, containerStyle, textStyle, component, ...rest
   } = props;
 
-  const Element = nested ? Box : ListItemButton;
+  const Element = component || ListItemButton;
 
   return (
     <Element
       sx={{
-        backgroundColor: (theme) => (nested ? 'none' : theme.palette.grey['200']),
+        backgroundColor: (theme) => (theme.palette.grey['200']),
         mt: 2,
         borderRadius: 1,
         ...containerStyle,
@@ -39,5 +38,5 @@ BaseInput.propTypes = {
   children: PropTypes.node,
   containerStyle: PropTypes.object,
   textStyle: PropTypes.object,
-  nested: PropTypes.bool,
+  component: PropTypes.object,
 };
