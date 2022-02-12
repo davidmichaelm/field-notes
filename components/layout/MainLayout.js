@@ -1,13 +1,17 @@
 import {
-  Box, Typography,
+  Box, IconButton, Typography,
 } from '@mui/material';
 import Head from 'next/head';
 import PropTypes from 'prop-types';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { useAuthUser, withAuthUser } from 'next-firebase-auth';
 import MainNavbar from './MainNavbar';
 
-export default function MainLayout({
+function MainLayout({
   title, icon, children,
 }) {
+  const user = useAuthUser();
+
   return (
     <Box sx={{ display: 'flex' }}>
       <Head>
@@ -23,8 +27,6 @@ export default function MainLayout({
           p: 2,
           height: '6rem',
           width: '100%',
-
-          alignItems: 'flex-start',
         }}
         >
           <Box sx={{
@@ -42,6 +44,12 @@ export default function MainLayout({
               {' '}
               {title}
             </Typography>
+            <IconButton
+              sx={{ ml: 'auto' }}
+              onClick={() => user.signOut()}
+            >
+              <LogoutIcon />
+            </IconButton>
           </Box>
         </Box>
 
@@ -74,3 +82,5 @@ MainLayout.propTypes = {
   icon: PropTypes.node,
   children: PropTypes.node,
 };
+
+export default withAuthUser()(MainLayout);

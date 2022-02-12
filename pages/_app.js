@@ -1,6 +1,9 @@
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import 'styles/globals.css';
 import PropTypes from 'prop-types';
+import initAuth from '../auth/initAuth';
+
+initAuth();
 
 const theme = createTheme({
   palette: {
@@ -13,7 +16,10 @@ const theme = createTheme({
   },
 });
 
-function MyApp({ Component, pageProps }) {
+function MyApp({
+  Component,
+  pageProps: { session, ...pageProps },
+}) {
   return (
     <ThemeProvider theme={theme}>
       <Component {...pageProps} />

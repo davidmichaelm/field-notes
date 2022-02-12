@@ -17,3 +17,16 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.firebaseui-button {
+  background-color: #568259 !important;
+  color: white !important;
+}
+
+.firebaseui-button:hover {
+  background-color: rgba(86, 130, 89, 0.85) !important;
+}
+
+.firebaseui-textfield.mdl-textfield .firebaseui-label::after {
+  background-color: #568259 !important;
+}
