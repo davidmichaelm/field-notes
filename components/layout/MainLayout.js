@@ -6,9 +6,10 @@ import PropTypes from 'prop-types';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useAuthUser, withAuthUser } from 'next-firebase-auth';
 import MainNavbar from './MainNavbar';
+import MainLayoutError from './MainLayoutError';
 
 function MainLayout({
-  title, icon, loading, children,
+  title, icon, loading, error, children,
 }) {
   const user = useAuthUser();
 
@@ -72,7 +73,9 @@ function MainLayout({
             width: '100%', maxWidth: '60rem', display: 'flex', flexDirection: 'column', alignItems: 'flex-start',
           }}
           >
-            {children}
+            {error
+              ? <MainLayoutError />
+              : children}
           </Box>
         </Box>
       </Box>
@@ -84,6 +87,7 @@ MainLayout.propTypes = {
   title: PropTypes.string,
   icon: PropTypes.node,
   loading: PropTypes.bool,
+  error: PropTypes.bool,
   children: PropTypes.node,
 };
 

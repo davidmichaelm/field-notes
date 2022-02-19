@@ -19,6 +19,9 @@ export default function Form() {
 
   useEffect(() => {
     const fetchForm = async () => {
+      setError(false);
+      setLoading(true);
+
       try {
         const db = firebase.firestore();
         const form = await db.collection('forms').doc(formId).get();
@@ -64,6 +67,7 @@ export default function Form() {
         />
       )}
       loading={loading}
+      error={error}
     >
       <Typography
         variant="h5"

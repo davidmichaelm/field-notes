@@ -18,6 +18,9 @@ function Forms() {
 
   useEffect(() => {
     const fetchForms = async () => {
+      setError(false);
+      setLoading(true);
+
       try {
         const db = firebase.firestore();
         const userDoc = await db.collection('users').doc(user.email).get();
@@ -49,6 +52,7 @@ function Forms() {
           sx={{ fontSize: '2.5rem' }}
         />
       )}
+      error={error}
     >
       <Typography
         variant="h5"
