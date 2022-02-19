@@ -4,7 +4,7 @@ import {
 import Head from 'next/head';
 import PropTypes from 'prop-types';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { useAuthUser, withAuthUser } from 'next-firebase-auth';
+import { AuthAction, useAuthUser, withAuthUser } from 'next-firebase-auth';
 import MainNavbar from './MainNavbar';
 import MainLayoutError from './MainLayoutError';
 
@@ -91,4 +91,6 @@ MainLayout.propTypes = {
   children: PropTypes.node,
 };
 
-export default withAuthUser()(MainLayout);
+export default withAuthUser({
+  whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN,
+})(MainLayout);

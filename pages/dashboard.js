@@ -1,8 +1,7 @@
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import { AuthAction, withAuthUser } from 'next-firebase-auth';
 import MainLayout from '../components/layout/MainLayout';
 
-function Dashboard() {
+export default function Dashboard() {
   return (
     <MainLayout
       title="Dashboard"
@@ -15,7 +14,3 @@ function Dashboard() {
     />
   );
 }
-
-export default withAuthUser({
-  whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN,
-})(Dashboard);
