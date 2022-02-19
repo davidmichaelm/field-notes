@@ -11,7 +11,7 @@ import MainLayout from '../../components/layout/MainLayout';
 
 function Forms() {
   const user = useAuthUser();
-  const [forms, setForms] = useState([{}]);
+  const [forms, setForms] = useState([{ id: '' }]);
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
