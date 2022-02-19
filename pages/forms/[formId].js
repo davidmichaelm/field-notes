@@ -1,144 +1,57 @@
-import { Typography } from '@mui/material';
+import { Skeleton, Typography } from '@mui/material';
 import ArticleIcon from '@mui/icons-material/Article';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+import { useRouter } from 'next/router';
 import MainLayout from '../../components/layout/MainLayout';
 import { FormInputs } from '../../components/formBuilder/inputs';
 
-const title = 'India Form';
-const formInputsTestData = [
-  {
-    id: 0,
-    name: 'date',
-    text: 'Date of gathering:',
-    type: 'date',
-  },
-  {
-    id: 1,
-    name: 'location',
-    text: 'Select your location:',
-    type: 'select',
-    options: [
-      {
-        id: 0,
-        text: 'East Godavari',
-      },
-      {
-        id: 1,
-        text: 'West Godavari',
-      },
-      {
-        id: 2,
-        text: 'Telangana',
-      },
-      {
-        id: 3,
-        text: 'Krishna River District',
-      },
-      {
-        id: 4,
-        text: 'KANN',
-      },
-      {
-        id: 5,
-        text: 'North',
-      },
-    ],
-  },
-  {
-    id: 2,
-    name: 'name',
-    text: 'Select your name:',
-    type: 'select',
-    options: [
-      {
-        id: 0,
-        text: 'Test Person',
-      },
-      {
-        id: 1,
-        text: 'Another Person',
-      },
-    ],
-  },
-  {
-    id: 3,
-    name: 'worshipAttendance',
-    text: 'How many people in worship?',
-    type: 'group',
-    inputs: [
-      {
-        id: 0,
-        name: 'worshipAttendance-adults',
-        text: 'Adults',
-        type: 'number',
-      },
-      {
-        id: 1,
-        name: 'worshipAttendance-children',
-        text: 'Children',
-        type: 'number',
-      },
-    ],
-  },
-  {
-    id: 4,
-    name: 'bibleStudyAttendance',
-    text: 'How many people in Bible study?',
-    type: 'group',
-    inputs: [
-      {
-        id: 0,
-        name: 'bibleStudyAttendance-adults',
-        text: 'Adults',
-        type: 'number',
-      },
-      {
-        id: 1,
-        name: 'bibleStudyAttendance-children',
-        text: 'Children',
-        type: 'number',
-      },
-    ],
-  },
-  {
-    id: 5,
-    name: 'baptisms',
-    text: 'How many people were baptized?',
-    type: 'group',
-    inputs: [
-      {
-        id: 0,
-        name: 'baptisms-adults',
-        text: 'Adults',
-        type: 'number',
-      },
-      {
-        id: 1,
-        name: 'baptisms-children',
-        text: 'Children',
-        type: 'number',
-      },
-    ],
-  },
-  {
-    id: 6,
-    name: 'communionAttendance',
-    text: 'How many people received Holy Communion?',
-    type: 'number',
-  },
-  {
-    id: 7,
-    name: 'offerings',
-    text: 'How much was given in offerings?',
-    type: 'number',
-  },
-];
-
 export default function Form() {
-  const [formInputs, setFormInputs] = useState(formInputsTestData);
+  const router = useRouter();
+  const { formId } = router.query;
+
+  const [title, setTitle] = useState('');
+  const [formInputs, setFormInputs] = useState([]);
+
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    const fetchForm = async () => {
+      try {
+        const db = firebase.firestore();
+        const form = await db.collection('forms').doc(formId).get();
+        if (form.exists) {
+          const data = form.data();
+          setTitle(data.title);
+          setFormInputs(data.schema);
+        } else {
+          setTitle('Not Found');
+          router.push('./');
+        }
+      } catch (e) {
+        setError(true);
+      }
+      setLoading(false);
+    };
+
+    if (!formId) return;
+    fetchForm();
+  }, [formId, router]);
 
   const handleInputSave = (input) => {
-    setFormInputs(formInputs.map((i) => (i.id === input.id ? input : i)));
+    const updatedInputs = formInputs.map((i) => (i.id === input.id ? input : i));
+    setFormInputs(updatedInputs);
+
+    const db = firebase.firestore();
+    db.collection('forms').doc(formId)
+      .set(
+        {
+          schema: updatedInputs,
+        },
+        { merge: true },
+      );
   };
 
   return (
@@ -150,13 +63,14 @@ export default function Form() {
           sx={{ fontSize: '2.5rem' }}
         />
       )}
+      loading={loading}
     >
       <Typography
         variant="h5"
         color="primary"
         sx={{ mb: 1 }}
       >
-        Form questions
+        {loading ? <Skeleton width={300} /> : 'Form questions' }
       </Typography>
 
       <FormInputs

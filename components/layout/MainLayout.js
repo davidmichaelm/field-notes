@@ -1,5 +1,5 @@
 import {
-  Box, IconButton, Typography,
+  Box, IconButton, Skeleton, Typography,
 } from '@mui/material';
 import Head from 'next/head';
 import PropTypes from 'prop-types';
@@ -8,7 +8,7 @@ import { useAuthUser, withAuthUser } from 'next-firebase-auth';
 import MainNavbar from './MainNavbar';
 
 function MainLayout({
-  title, icon, children,
+  title, icon, loading, children,
 }) {
   const user = useAuthUser();
 
@@ -16,9 +16,11 @@ function MainLayout({
     <Box sx={{ display: 'flex' }}>
       <Head>
         <title>
-          Field Notes -
+          {loading
+            ? 'Loading...'
+            : title}
           {' '}
-          {title}
+          - Field Notes
         </title>
       </Head>
       <MainNavbar />
@@ -41,8 +43,9 @@ function MainLayout({
             <Typography
               variant="h4"
             >
-              {' '}
-              {title}
+              {loading
+                ? <Skeleton width={300} />
+                : ` ${title}`}
             </Typography>
             <IconButton
               sx={{ ml: 'auto' }}
@@ -80,6 +83,7 @@ function MainLayout({
 MainLayout.propTypes = {
   title: PropTypes.string,
   icon: PropTypes.node,
+  loading: PropTypes.bool,
   children: PropTypes.node,
 };
 

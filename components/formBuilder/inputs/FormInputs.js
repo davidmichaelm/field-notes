@@ -6,7 +6,13 @@ export default function FormInputs(props) {
   const { formInputs, onInputSave } = props;
 
   return (
-    <List sx={{ width: '100%' }}>
+    <List sx={{
+      width: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 2,
+    }}
+    >
       {formInputs.map((input) => {
         const Input = inputTypes[input.type];
         const onSave = input.type === 'select' ? { onSave: onInputSave } : null;

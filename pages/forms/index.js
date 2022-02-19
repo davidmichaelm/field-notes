@@ -1,18 +1,45 @@
 import {
-  List, ListItemButton, ListItemText, Typography,
+  List, ListItemButton, ListItemText, Skeleton, Typography,
 } from '@mui/material';
 import ArticleIcon from '@mui/icons-material/Article';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+import { useAuthUser, withAuthUser } from 'next-firebase-auth';
 import MainLayout from '../../components/layout/MainLayout';
 
-const forms = [
-  {
-    id: 0,
-    title: 'India Form',
-  },
-];
+function Forms() {
+  const user = useAuthUser();
+  const [forms, setForms] = useState([{}]);
 
-export default function Forms() {
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    const fetchForms = async () => {
+      try {
+        const db = firebase.firestore();
+        const userDoc = await db.collection('users').doc(user.email).get();
+        const { forms: formRefs } = userDoc.data();
+        if (!formRefs) return;
+
+        const results = await Promise.all(formRefs.map((formRef) => formRef.get()));
+        setForms(results.map((result) => ({
+          ...result.data(),
+          id: result.id,
+        })));
+      } catch (e) {
+        setError(true);
+      }
+
+      setLoading(false);
+    };
+
+    if (!user.id) return;
+    fetchForms();
+  }, [user]);
+
   return (
     <MainLayout
       title="Forms"
@@ -46,7 +73,11 @@ export default function Forms() {
               mb: 1,
             }}
             >
-              <ListItemText>{form.title}</ListItemText>
+              <ListItemText>
+                {loading
+                  ? <Skeleton />
+                  : form.title}
+              </ListItemText>
             </ListItemButton>
           </Link>
 
@@ -56,3 +87,5 @@ export default function Forms() {
     </MainLayout>
   );
 }
+
+export default withAuthUser()(Forms);
