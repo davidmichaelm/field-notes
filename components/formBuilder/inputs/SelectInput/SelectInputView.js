@@ -15,7 +15,8 @@ export default function SelectInputView(props) {
       {input.text}
       <Box sx={{ pl: 4 }}>
         {input.options.map((item) => {
-          const parentFieldOption = parentFieldOptions?.find((option) => option.id === item.id);
+          // eslint-disable-next-line max-len
+          const parentFieldOption = parentFieldOptions?.find((option) => option.id === item.parentId);
           if (parentFieldOption) {
             return (
               <Typography
