@@ -4,7 +4,7 @@ import BaseInput from '../BaseInput';
 
 export default function SelectInputView(props) {
   const {
-    input, containerStyle, parentFieldOptions, ...rest
+    input: { dependsOn, options, text }, containerStyle, parentFieldOptions, ...rest
   } = props;
 
   return (
@@ -12,32 +12,29 @@ export default function SelectInputView(props) {
       containerStyle={containerStyle}
       {...rest}
     >
-      {input.text}
+      {text}
       <Box sx={{ pl: 4 }}>
-        {input.options.map((item) => {
-          // eslint-disable-next-line max-len
-          const parentFieldOption = parentFieldOptions?.find((option) => option.id === item.parentId);
-          if (parentFieldOption) {
-            return (
-              <Typography
-                color="gray"
-                key={item.id}
-              >
-                {parentFieldOption.text}
-                {': '}
-                {item.options?.map((itemOption) => (
-                  itemOption.text
-                )).join(', ')}
-              </Typography>
-            );
-          }
-
+        {!dependsOn && options.map((item) => (
+          <Typography
+            color="gray"
+            key={item.id}
+          >
+            {!parentFieldOptions && item.text}
+          </Typography>
+        ))}
+        {dependsOn && parentFieldOptions.map((parentFieldOption) => {
+          const filteredOptions = options
+            .filter((option) => option.parentId === parentFieldOption.id)
+            .map((option) => option.text);
           return (
             <Typography
               color="gray"
-              key={item.id}
+              key={parentFieldOption.id}
             >
-              {!parentFieldOptions && item.text}
+              {parentFieldOption.text}
+              {': '}
+              {options && filteredOptions.join(', ')}
+              {filteredOptions.length === 0 && '(No options)'}
             </Typography>
           );
         })}

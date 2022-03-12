@@ -9,6 +9,10 @@ export default function SelectInput(props) {
 
   const handleSave = (data) => {
     setEditing(false);
+    console.log('saving', {
+      ...input,
+      ...data,
+    });
     onSave({
       ...input,
       ...data,

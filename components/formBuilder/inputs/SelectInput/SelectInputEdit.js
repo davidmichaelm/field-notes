@@ -1,25 +1,34 @@
 import {
-  Box, Button, IconButton, ListItem, Stack, TextField,
+  Box, Button, ListItem, Stack, Typography,
 } from '@mui/material';
 import { useFieldArray, useForm } from 'react-hook-form';
-import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { v4 as uuid } from 'uuid';
 import PropTypes from 'prop-types';
 import BaseInput from '../BaseInput';
+import OptionEdit from './OptionEdit';
+import AddOptionButton from './AddOptionButton';
 
 export default function SelectInputEdit(props) {
   const {
-    input, containerStyle, onSave, onCancel, ...rest
+    input, containerStyle, parentFieldOptions, onSave, onCancel, ...rest
   } = props;
+
+  const defaultOptions = parentFieldOptions
+    ? input.options?.map((option) => ({
+      ...option,
+      parentField: parentFieldOptions[option.parentId].text,
+      parentId: option.parentId,
+    }))
+    : input.options;
+
   const { control, register, handleSubmit } = useForm({
-    defaultValues: { options: input.options },
+    defaultValues: { options: defaultOptions },
   });
   const {
     fields, append, remove,
   } = useFieldArray({
     control,
-    name: 'options', // TODO: unique name for your Field Array
+    name: 'options',
     keyName: 'key',
   });
 
@@ -27,12 +36,29 @@ export default function SelectInputEdit(props) {
     remove(index);
   };
 
-  const addOption = () => {
+  const addOption = (parentOption) => {
+    console.log(parentOption);
     append({
       id: uuid(),
       text: '',
+      ...(parentOption ? {
+        parentId: parentOption.id,
+        parentField: parentOption.text,
+      } : null),
+
     });
   };
+
+  const fieldsByParentField = fields.reduce((accumulator, value) => {
+    const { parentField } = value;
+    if (!accumulator[parentField]) {
+      accumulator[parentField] = [];
+    }
+
+    accumulator[parentField].push(value);
+
+    return accumulator;
+  }, {});
 
   return (
     <form onSubmit={handleSubmit((data) => onSave(data))}>
@@ -45,44 +71,43 @@ export default function SelectInputEdit(props) {
         <Box sx={{ mb: 1 }}>
           {input.text}
         </Box>
-        {fields.map((option, index) => (
+        {parentFieldOptions && parentFieldOptions.map((parentOption) => (
           <Stack
-            direction="row"
-            spacing={1}
-            key={option.key}
+            gap={1}
+            key={parentOption.id}
           >
-            <TextField
-              defaultValue={option.text}
-              {...register(`options.${index}.text`)}
-              autoFocus={!option.text}
-              fullWidth
-              size="small"
-            />
-            <IconButton
-              sx={{
-                borderRadius: 1,
-                ':hover': {
-                  backgroundColor: (theme) => theme.palette.error.light,
-                  color: 'white',
-                },
-              }}
-              onClick={() => removeOption(index)}
-            >
-              <RemoveCircleOutlineIcon />
-            </IconButton>
+            <Typography>{parentOption.text}</Typography>
+            {fieldsByParentField[parentOption.text]?.map((option) => (
+              <OptionEdit
+                option={option}
+                index={fields.indexOf(option)}
+                parentOption={parentOption}
+                register={register}
+                onRemoveOption={removeOption}
+                key={option.key}
+              />
+            ))}
+            <Box>
+              <AddOptionButton onAddOption={() => addOption(parentOption)} />
+            </Box>
           </Stack>
-
         ))}
-        <Box>
-          <Button
-            startIcon={<AddCircleIcon />}
-            color="secondary"
-            sx={{ textTransform: 'none' }}
-            onClick={addOption}
-          >
-            Add new option
-          </Button>
-        </Box>
+        {!parentFieldOptions && (
+        <>
+          {fields.map((option, index) => (
+            <OptionEdit
+              option={option}
+              index={index}
+              register={register}
+              onRemoveOption={removeOption}
+              key={option.key}
+            />
+          ))}
+          <Box>
+            <AddOptionButton onAddOption={() => addOption()} />
+          </Box>
+        </>
+        )}
 
         <Box sx={{
           mt: 2,
@@ -114,6 +139,7 @@ export default function SelectInputEdit(props) {
 SelectInputEdit.propTypes = {
   input: PropTypes.object,
   containerStyle: PropTypes.object,
+  parentFieldOptions: PropTypes.array,
   onSave: PropTypes.func,
   onCancel: PropTypes.func,
 };
