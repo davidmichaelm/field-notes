@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import SelectInputView from './SelectInputView';
-import SelectInputEdit from './SelectInputEdit';
+import SelectDesignInputView from './SelectDesignInputView';
+import SelectDesignInputEdit from './SelectDesignInputEdit';
 
 export default function SelectInput(props) {
   const { input, onSave, ...rest } = props;
@@ -22,7 +22,7 @@ export default function SelectInput(props) {
   return (
     <>
       {editing && (
-        <SelectInputEdit
+        <SelectDesignInputEdit
           onSave={handleSave}
           onCancel={() => setEditing(false)}
           input={input}
@@ -30,7 +30,7 @@ export default function SelectInput(props) {
         />
       )}
       {!editing && (
-        <SelectInputView
+        <SelectDesignInputView
           onClick={() => setEditing(true)}
           input={input}
           {...rest}

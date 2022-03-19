@@ -1,12 +1,12 @@
 import { InputAdornment, TextField } from '@mui/material';
 import PropTypes from 'prop-types';
 import EventIcon from '@mui/icons-material/Event';
-import BaseInput from './BaseInput';
+import BaseDesignInput from './BaseDesignInput';
 
-export default function DateInput(props) {
+export default function DateDesignInput(props) {
   const { input, containerStyle, ...rest } = props;
   return (
-    <BaseInput
+    <BaseDesignInput
       containerStyle={containerStyle}
       {...rest}
     >
@@ -24,11 +24,11 @@ export default function DateInput(props) {
           ),
         }}
       />
-    </BaseInput>
+    </BaseDesignInput>
   );
 }
 
-DateInput.propTypes = {
+DateDesignInput.propTypes = {
   input: PropTypes.object,
   containerStyle: PropTypes.object,
 };

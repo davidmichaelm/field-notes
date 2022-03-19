@@ -3,7 +3,7 @@ import {
 } from '@mui/material';
 import PropTypes from 'prop-types';
 
-export default function BaseInput(props) {
+export default function BaseDesignInput(props) {
   const {
     children, containerStyle, textStyle, component, ...rest
   } = props;
@@ -33,7 +33,7 @@ export default function BaseInput(props) {
   );
 }
 
-BaseInput.propTypes = {
+BaseDesignInput.propTypes = {
   children: PropTypes.node,
   containerStyle: PropTypes.object,
   textStyle: PropTypes.object,

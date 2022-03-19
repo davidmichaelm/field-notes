@@ -1,4 +1,4 @@
-import GroupInput from '../GroupInput';
+import GroupInput from './base/GroupInput';
 import singleInputTypes from './singleInputTypes';
 
 const inputTypes = {

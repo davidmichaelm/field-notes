@@ -4,11 +4,11 @@ import {
 import { useFieldArray, useForm } from 'react-hook-form';
 import { v4 as uuid } from 'uuid';
 import PropTypes from 'prop-types';
-import BaseInput from '../BaseInput';
+import BaseDesignInput from '../BaseDesignInput';
 import OptionEdit from './OptionEdit';
 import AddOptionButton from './AddOptionButton';
 
-export default function SelectInputEdit(props) {
+export default function SelectDesignInputEdit(props) {
   const {
     input, containerStyle, parentFieldOptions, onSave, onCancel, ...rest
   } = props;
@@ -62,7 +62,7 @@ export default function SelectInputEdit(props) {
 
   return (
     <form onSubmit={handleSubmit((data) => onSave(data))}>
-      <BaseInput
+      <BaseDesignInput
         containerStyle={{ p: 2, pt: 1, ...containerStyle }}
         selected
         component={ListItem}
@@ -131,12 +131,12 @@ export default function SelectInputEdit(props) {
             Save
           </Button>
         </Box>
-      </BaseInput>
+      </BaseDesignInput>
     </form>
   );
 }
 
-SelectInputEdit.propTypes = {
+SelectDesignInputEdit.propTypes = {
   input: PropTypes.object,
   containerStyle: PropTypes.object,
   parentFieldOptions: PropTypes.array,

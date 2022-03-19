@@ -1,11 +1,11 @@
 import { TextField } from '@mui/material';
 import PropTypes from 'prop-types';
-import BaseInput from './BaseInput';
+import BaseDesignInput from './BaseDesignInput';
 
-export default function NumberInput(props) {
+export default function NumberDesignInput(props) {
   const { input, containerStyle, ...rest } = props;
   return (
-    <BaseInput
+    <BaseDesignInput
       containerStyle={containerStyle}
       {...rest}
     >
@@ -16,11 +16,11 @@ export default function NumberInput(props) {
         variant="standard"
         sx={{ width: '300px' }}
       />
-    </BaseInput>
+    </BaseDesignInput>
   );
 }
 
-NumberInput.propTypes = {
+NumberDesignInput.propTypes = {
   input: PropTypes.object,
   containerStyle: PropTypes.object,
 };

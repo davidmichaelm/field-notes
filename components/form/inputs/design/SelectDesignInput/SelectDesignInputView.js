@@ -1,14 +1,14 @@
 import { Box, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
-import BaseInput from '../BaseInput';
+import BaseDesignInput from '../BaseDesignInput';
 
-export default function SelectInputView(props) {
+export default function SelectDesignInputView(props) {
   const {
     input: { dependsOn, options, text }, containerStyle, parentFieldOptions, ...rest
   } = props;
 
   return (
-    <BaseInput
+    <BaseDesignInput
       containerStyle={containerStyle}
       {...rest}
     >
@@ -39,11 +39,11 @@ export default function SelectInputView(props) {
           );
         })}
       </Box>
-    </BaseInput>
+    </BaseDesignInput>
   );
 }
 
-SelectInputView.propTypes = {
+SelectDesignInputView.propTypes = {
   input: PropTypes.object,
   containerStyle: PropTypes.object,
   parentFieldOptions: PropTypes.array,

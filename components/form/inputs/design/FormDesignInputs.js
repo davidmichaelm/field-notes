@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import { List } from '@mui/material';
-import inputTypes from './inputTypes/inputTypes';
+import designInputTypes from './designInputTypes';
 
-export default function FormInputs(props) {
+export default function FormDesignInputs(props) {
   const { formInputs, onInputSave } = props;
 
   return (
@@ -14,7 +14,7 @@ export default function FormInputs(props) {
     }}
     >
       {formInputs.map((input) => {
-        const Input = inputTypes[input.type];
+        const Input = designInputTypes[input.type];
         const onSave = input.type === 'select' ? { onSave: onInputSave } : null;
 
         const parentField = input.dependsOn
@@ -35,7 +35,7 @@ export default function FormInputs(props) {
   );
 }
 
-FormInputs.propTypes = {
+FormDesignInputs.propTypes = {
   formInputs: PropTypes.array,
   onInputSave: PropTypes.func,
 };

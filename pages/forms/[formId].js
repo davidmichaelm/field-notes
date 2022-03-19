@@ -5,7 +5,7 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import { useRouter } from 'next/router';
 import MainLayout from '../../components/layout/MainLayout';
-import { FormInputs } from '../../components/formBuilder/inputs';
+import { FormDesignInputs } from '../../components/form/inputs/design';
 
 export default function Form() {
   const router = useRouter();
@@ -77,7 +77,7 @@ export default function Form() {
         {loading ? <Skeleton width={300} /> : 'Form questions' }
       </Typography>
 
-      <FormInputs
+      <FormDesignInputs
         formInputs={formInputs}
         onInputSave={handleInputSave}
       />

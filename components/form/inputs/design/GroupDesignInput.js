@@ -1,19 +1,19 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Box } from '@mui/material';
-import BaseInput from './BaseInput';
-import singleInputTypes from './inputTypes/singleInputTypes';
+import BaseDesignInput from './BaseDesignInput';
+import singleDesignInputTypes from './singleDesignInputTypes';
 
-export default function GroupInput(props) {
+export default function GroupDesignInput(props) {
   const { input, containerStyle, ...rest } = props;
   return (
-    <BaseInput
+    <BaseDesignInput
       containerStyle={containerStyle}
       {...rest}
     >
       {input.text}
       {input.inputs.map((item) => {
-        const Input = singleInputTypes[item.type];
+        const Input = singleDesignInputTypes[item.type];
 
         return (
           <React.Fragment key={item.id}>
@@ -28,11 +28,11 @@ export default function GroupInput(props) {
           </React.Fragment>
         );
       })}
-    </BaseInput>
+    </BaseDesignInput>
   );
 }
 
-GroupInput.propTypes = {
+GroupDesignInput.propTypes = {
   input: PropTypes.object,
   containerStyle: PropTypes.object,
 };
