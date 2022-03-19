@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import { List } from '@mui/material';
-import designInputTypes from './designInputTypes';
+import designInputTypes from '../inputs/design/designInputTypes';
 
-export default function FormDesignInputs(props) {
+export default function FormDesignLayout(props) {
   const { formInputs, onInputSave } = props;
 
   return (
@@ -35,7 +35,7 @@ export default function FormDesignInputs(props) {
   );
 }
 
-FormDesignInputs.propTypes = {
+FormDesignLayout.propTypes = {
   formInputs: PropTypes.array,
   onInputSave: PropTypes.func,
 };
