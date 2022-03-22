@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 function BaseEntryInput(props) {
   const { children } = props;
   return (
-    <ListItem>
+    <ListItem component="div">
       <ListItemText primaryTypographyProps={{
         display: 'flex',
         flexDirection: 'column',
