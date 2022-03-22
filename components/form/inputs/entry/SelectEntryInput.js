@@ -14,9 +14,11 @@ function SelectEntryInput(props) {
       {input.text}
       <Select
         id={input.id}
-        defaultValue=""
         name={input.name}
+        defaultValue=""
         onChange={onSelect}
+        // Causes a nextjs hydration error -- has to do with emotion?
+        // disabled={(input.dependsOn && !selectedParent) || options.length === 0}
       >
         {options.map((option) => (
           <MenuItem
