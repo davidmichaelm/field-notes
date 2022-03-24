@@ -17,7 +17,11 @@ function NumberEntryInput(props) {
         type="number"
         error={!!fieldErrors}
         helperText={fieldErrors && 'Enter a number 0 or greater'}
-        {...register(input.id, { required: true, pattern: /^[0-9]\d*$/ })}
+        {...register(input.id, {
+          required: true,
+          valueAsNumber: true,
+          validate: (value) => value >= 0,
+        })}
       />
     </BaseEntryInput>
   );
