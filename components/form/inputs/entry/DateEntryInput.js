@@ -17,7 +17,7 @@ const CustomPickersDay = styled(PickersDay, {
     borderRadius: 0,
     backgroundColor: theme.palette.primary.main,
     color: theme.palette.common.white,
-    '&:hover': {
+    '&:hover, &:focus': {
       backgroundColor: theme.palette.primary.main,
     },
   }),
@@ -42,7 +42,7 @@ function DateEntryInput(props) {
     name: input.id,
     control,
     rules: { required: true },
-    defaultValue: new Date(),
+    defaultValue: startOfWeek(new Date()),
   });
 
   const renderWeekPickerDay = (date, selectedDates, pickersDayProps) => {
@@ -68,6 +68,10 @@ function DateEntryInput(props) {
     );
   };
 
+  const pickStartOfWeek = (data) => {
+    onChange(startOfWeek(data));
+  };
+
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <BaseEntryInput>
@@ -76,7 +80,7 @@ function DateEntryInput(props) {
           displayStaticWrapperAs="desktop"
           value={value}
           name={name}
-          onChange={onChange}
+          onChange={pickStartOfWeek}
           onBlur={onBlur}
           renderDay={renderWeekPickerDay}
           renderInput={(params) => <TextField {...params} />}
