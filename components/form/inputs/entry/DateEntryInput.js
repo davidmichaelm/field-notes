@@ -2,10 +2,10 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import {
   endOfWeek, isSameDay, isWithinInterval, startOfWeek,
 } from 'date-fns';
-import { useState } from 'react';
 import { styled, TextField } from '@mui/material';
 import { LocalizationProvider, MobileDatePicker, PickersDay } from '@mui/lab';
 import PropTypes from 'prop-types';
+import { useFormContext, useController } from 'react-hook-form';
 import BaseEntryInput from './BaseEntryInput';
 
 const CustomPickersDay = styled(PickersDay, {
@@ -33,7 +33,17 @@ const CustomPickersDay = styled(PickersDay, {
 
 function DateEntryInput(props) {
   const { input } = props;
-  const [value, setValue] = useState(new Date());
+  const { control } = useFormContext();
+  const {
+    field: {
+      onChange, onBlur, name, value, ref,
+    },
+  } = useController({
+    name: input.name,
+    control,
+    rules: { required: true },
+    defaultValue: new Date(),
+  });
 
   const renderWeekPickerDay = (date, selectedDates, pickersDayProps) => {
     if (!value) {
@@ -65,10 +75,13 @@ function DateEntryInput(props) {
         <MobileDatePicker
           displayStaticWrapperAs="desktop"
           value={value}
-          onChange={(newValue) => setValue(newValue)}
+          name={name}
+          onChange={onChange}
+          onBlur={onBlur}
           renderDay={renderWeekPickerDay}
           renderInput={(params) => <TextField {...params} />}
           inputFormat="'Week of' MMMM d"
+          inputRef={ref}
         />
       </BaseEntryInput>
     </LocalizationProvider>

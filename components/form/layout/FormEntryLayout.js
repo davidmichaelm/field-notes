@@ -1,13 +1,13 @@
-import { Stack } from '@mui/material';
+import { Button, Stack } from '@mui/material';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
+import { useForm, FormProvider } from 'react-hook-form';
 import { inputTypes } from '../inputs';
 
 function FormEntryLayout(props) {
   const { schema } = props;
 
   const [selectedParents, setSelectedParents] = useState({});
-
   const handleParentSelect = (event) => {
     setSelectedParents((oldValues) => ({
       ...oldValues,
@@ -15,34 +15,55 @@ function FormEntryLayout(props) {
     }));
   };
 
+  const methods = useForm();
+  const onSubmit = (data) => console.log(data);
+
   return (
-    <Stack
-      spacing={2}
-      width="40rem"
-      maxWidth="100%"
-    >
-      {schema?.map((input) => {
-        const { type, dependsOn, id } = input;
+    <FormProvider {...methods}>
+      <form onSubmit={methods.handleSubmit(onSubmit)}>
+        <Stack
+          spacing={2}
+          width="100%"
+          maxWidth="60rem"
+          marginBottom={4}
+        >
+          {schema?.map((input) => {
+            const { type, dependsOn, id } = input;
 
-        const Input = inputTypes[type];
-        const onSelect = type === 'select'
-          ? { onSelect: handleParentSelect }
-          : null;
-        const selectedParent = type === 'select' && dependsOn
-          ? { selectedParent: selectedParents[dependsOn] }
-          : null;
+            const Input = inputTypes[type];
+            const onSelect = type === 'select'
+              ? { onSelect: handleParentSelect }
+              : null;
+            const selectedParent = type === 'select' && dependsOn
+              ? { selectedParent: selectedParents[dependsOn] }
+              : null;
 
-        return (
-          <Input
-            key={id}
-            input={input}
-            design={false}
-            {...onSelect}
-            {...selectedParent}
-          />
-        );
-      })}
-    </Stack>
+            return (
+              <Input
+                key={id}
+                input={input}
+                design={false}
+                {...onSelect}
+                {...selectedParent}
+              />
+            );
+          })}
+          <Stack
+            alignItems="center"
+            sx={{ width: '100%' }}
+          >
+            <Button
+              type="submit"
+              variant="contained"
+              size="large"
+              sx={{ width: '100%' }}
+            >
+              Submit Form
+            </Button>
+          </Stack>
+        </Stack>
+      </form>
+    </FormProvider>
   );
 }
 

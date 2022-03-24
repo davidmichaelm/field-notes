@@ -1,9 +1,11 @@
 import { MenuItem, Select } from '@mui/material';
 import PropTypes from 'prop-types';
+import { useFormContext } from 'react-hook-form';
 import BaseEntryInput from './BaseEntryInput';
 
 function SelectEntryInput(props) {
   const { input, onSelect, selectedParent } = props;
+  const { register } = useFormContext();
 
   const options = input.dependsOn
     ? input.options.filter((option) => option.parentId === selectedParent)
@@ -14,9 +16,10 @@ function SelectEntryInput(props) {
       {input.text}
       <Select
         id={input.id}
-        name={input.name}
         defaultValue=""
-        onChange={onSelect}
+        {...register(input.name, {
+          onChange: onSelect,
+        })}
         // Causes a nextjs hydration error -- has to do with emotion?
         // disabled={(input.dependsOn && !selectedParent) || options.length === 0}
       >
