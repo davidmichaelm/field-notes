@@ -4,7 +4,6 @@ import { Box, Stack, Typography } from '@mui/material';
 import { fetchFormById } from '../../api/fetch';
 import { FormEntryLayout } from '../../components/form/layout';
 
-// eslint-disable-next-line no-unused-vars
 export default function FormEntry({ formId, title, schema }) {
   return (
     <Stack
@@ -32,7 +31,10 @@ export default function FormEntry({ formId, title, schema }) {
         <Box
           width="100%"
         >
-          <FormEntryLayout schema={schema} />
+          <FormEntryLayout
+            formId={formId}
+            schema={schema}
+          />
         </Box>
       </Stack>
     </Stack>
@@ -54,6 +56,7 @@ export async function getStaticProps(context) {
 
   return {
     props: {
+      formId,
       ...form,
     },
   };

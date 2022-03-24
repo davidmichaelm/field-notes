@@ -2,13 +2,28 @@ import { Button, Stack } from '@mui/material';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
+import firebase from 'firebase/app';
+import 'firebase/firestore';
 import { inputTypes } from '../inputs';
 
 function FormEntryLayout(props) {
-  const { schema } = props;
+  const { formId, schema } = props;
 
   const methods = useForm({ mode: 'onChange' });
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = async (data) => {
+    try {
+      await firebase.firestore()
+        .collection('forms')
+        .doc(formId)
+        .collection('submissions')
+        .add({
+          data,
+        });
+      console.log('done!');
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const [selectedParents, setSelectedParents] = useState({});
   const handleParentSelect = (event) => {
@@ -73,6 +88,7 @@ function FormEntryLayout(props) {
 }
 
 FormEntryLayout.propTypes = {
+  formId: PropTypes.string,
   schema: PropTypes.array,
 };
 
