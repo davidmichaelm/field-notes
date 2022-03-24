@@ -1,11 +1,11 @@
-import { MenuItem, Select } from '@mui/material';
+import { FormHelperText, MenuItem, Select } from '@mui/material';
 import PropTypes from 'prop-types';
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, Controller } from 'react-hook-form';
 import BaseEntryInput from './BaseEntryInput';
 
 function SelectEntryInput(props) {
   const { input, onSelect, selectedParent } = props;
-  const { register } = useFormContext();
+  const { control } = useFormContext();
 
   const options = input.dependsOn
     ? input.options.filter((option) => option.parentId === selectedParent)
@@ -14,24 +14,43 @@ function SelectEntryInput(props) {
   return (
     <BaseEntryInput>
       {input.text}
-      <Select
-        id={input.id}
+      <Controller
+        control={control}
         defaultValue=""
-        {...register(input.name, {
-          onChange: onSelect,
-        })}
-        // Causes a nextjs hydration error -- has to do with emotion?
-        // disabled={(input.dependsOn && !selectedParent) || options.length === 0}
-      >
-        {options.map((option) => (
-          <MenuItem
-            key={option.id}
-            value={option.id}
-          >
-            {option.text}
-          </MenuItem>
-        ))}
-      </Select>
+        rules={{ required: true }}
+        render={({
+          field: {
+            onChange, onBlur, value, name, ref,
+          },
+          fieldState: { error },
+        }) => (
+          <>
+            <Select
+              id={input.id}
+              error={!!error}
+              onChange={(event) => {
+                onSelect(event);
+                onChange(event);
+              }}
+              onBlur={onBlur}
+              name={name}
+              value={value}
+              inputRef={ref}
+            >
+              {options.map((option) => (
+                <MenuItem
+                  key={option.id}
+                  value={option.id}
+                >
+                  {option.text}
+                </MenuItem>
+              ))}
+            </Select>
+            {error && <FormHelperText error>This field is required</FormHelperText>}
+          </>
+        )}
+        name={input.name}
+      />
     </BaseEntryInput>
   );
 }

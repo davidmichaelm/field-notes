@@ -7,16 +7,22 @@ import { inputTypes } from '../inputs';
 function FormEntryLayout(props) {
   const { schema } = props;
 
+  const methods = useForm({ mode: 'onChange' });
+  const onSubmit = (data) => console.log(data);
+
   const [selectedParents, setSelectedParents] = useState({});
   const handleParentSelect = (event) => {
+    schema.forEach((input) => {
+      if (input.dependsOn === event.target.name) {
+        methods.resetField(input.name);
+      }
+    });
+
     setSelectedParents((oldValues) => ({
       ...oldValues,
       [event.target.name]: event.target.value,
     }));
   };
-
-  const methods = useForm();
-  const onSubmit = (data) => console.log(data);
 
   return (
     <FormProvider {...methods}>

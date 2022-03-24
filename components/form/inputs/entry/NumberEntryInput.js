@@ -5,7 +5,8 @@ import BaseEntryInput from './BaseEntryInput';
 
 function NumberEntryInput(props) {
   const { input } = props;
-  const { register } = useFormContext();
+  const { register, formState: { errors } } = useFormContext();
+  const fieldErrors = errors[input.name];
 
   return (
     <BaseEntryInput>
@@ -14,7 +15,9 @@ function NumberEntryInput(props) {
         placeholder="Enter a number"
         variant="standard"
         type="number"
-        {...register(input.name)}
+        error={!!fieldErrors}
+        helperText={fieldErrors && 'Enter a number 0 or greater'}
+        {...register(input.name, { required: true, pattern: /^[0-9]\d*$/ })}
       />
     </BaseEntryInput>
   );
