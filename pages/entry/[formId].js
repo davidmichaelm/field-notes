@@ -1,6 +1,6 @@
 import { getFirebaseAdmin } from 'next-firebase-auth';
 import PropTypes from 'prop-types';
-import { Stack, Typography } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 import { fetchFormById } from '../../api/fetch';
 import { FormEntryLayout } from '../../components/form/layout';
 
@@ -8,17 +8,33 @@ import { FormEntryLayout } from '../../components/form/layout';
 export default function FormEntry({ formId, title, schema }) {
   return (
     <Stack
+      backgroundColor={((theme) => theme.palette.primary.main)}
+      width="100%"
       alignItems="center"
+      paddingY={2}
       paddingX={1}
     >
-      <Typography
-        variant="h4"
-        marginY={1}
+      <Stack
+        alignItems="center"
+        paddingX={1}
+        paddingY={2}
+        width="100%"
+        maxWidth="40rem"
+        backgroundColor="white"
+        borderRadius={3}
       >
-        {title}
-      </Typography>
-      <FormEntryLayout schema={schema} />
-
+        <Typography
+          variant="h4"
+          marginY={1}
+        >
+          {title}
+        </Typography>
+        <Box
+          width="100%"
+        >
+          <FormEntryLayout schema={schema} />
+        </Box>
+      </Stack>
     </Stack>
   );
 }

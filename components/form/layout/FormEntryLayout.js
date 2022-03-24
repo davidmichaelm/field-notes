@@ -28,10 +28,9 @@ function FormEntryLayout(props) {
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)}>
         <Stack
-          spacing={2}
+          spacing={1}
           width="100%"
-          maxWidth="60rem"
-          marginBottom={4}
+          marginBottom={2}
         >
           {schema?.map((input) => {
             const { type, dependsOn, id } = input;
@@ -62,7 +61,7 @@ function FormEntryLayout(props) {
               type="submit"
               variant="contained"
               size="large"
-              sx={{ width: '100%' }}
+              sx={{ width: '90%', mt: 2 }}
             >
               Submit Form
             </Button>
