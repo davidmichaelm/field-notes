@@ -6,7 +6,7 @@ import BaseEntryInput from './BaseEntryInput';
 function NumberEntryInput(props) {
   const { input } = props;
   const { register, formState: { errors } } = useFormContext();
-  const fieldErrors = errors[input.name];
+  const fieldErrors = errors[input.id];
 
   return (
     <BaseEntryInput>
@@ -17,7 +17,7 @@ function NumberEntryInput(props) {
         type="number"
         error={!!fieldErrors}
         helperText={fieldErrors && 'Enter a number 0 or greater'}
-        {...register(input.name, { required: true, pattern: /^[0-9]\d*$/ })}
+        {...register(input.id, { required: true, pattern: /^[0-9]\d*$/ })}
       />
     </BaseEntryInput>
   );

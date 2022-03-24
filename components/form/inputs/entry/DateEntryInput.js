@@ -39,7 +39,7 @@ function DateEntryInput(props) {
       onChange, onBlur, name, value, ref,
     },
   } = useController({
-    name: input.name,
+    name: input.id,
     control,
     rules: { required: true },
     defaultValue: new Date(),

@@ -14,7 +14,7 @@ function FormEntryLayout(props) {
   const handleParentSelect = (event) => {
     schema.forEach((input) => {
       if (input.dependsOn === event.target.name) {
-        methods.resetField(input.name);
+        methods.resetField(input.id);
       }
     });
 

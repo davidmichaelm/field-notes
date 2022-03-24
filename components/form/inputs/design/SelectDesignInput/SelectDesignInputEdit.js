@@ -37,7 +37,6 @@ export default function SelectDesignInputEdit(props) {
   };
 
   const addOption = (parentOption) => {
-    console.log(parentOption);
     append({
       id: uuid(),
       text: '',

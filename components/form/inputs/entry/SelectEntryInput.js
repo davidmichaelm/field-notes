@@ -49,7 +49,7 @@ function SelectEntryInput(props) {
             {error && <FormHelperText error>This field is required</FormHelperText>}
           </>
         )}
-        name={input.name}
+        name={input.id}
       />
     </BaseEntryInput>
   );

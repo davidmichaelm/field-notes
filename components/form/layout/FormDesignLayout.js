@@ -18,7 +18,7 @@ export default function FormDesignLayout(props) {
         const onSave = input.type === 'select' ? { onSave: onInputSave } : null;
 
         const parentField = input.dependsOn
-          ? formInputs.find((parentInput) => parentInput.name === input.dependsOn)
+          ? formInputs.find((parentInput) => parentInput.id === input.dependsOn)
           : null;
         const parentFieldOptions = parentField ? { parentFieldOptions: parentField.options } : null;
 
